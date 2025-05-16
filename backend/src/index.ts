@@ -1,18 +1,24 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors"
-import router from "./routes/auth.routes";
 import { connectDB } from "./config/db";
+import authRouter from "./routes/auth.route";
+import userRouter from "./routes/user.route";
+import expenseRouter from "./routes/expense.route";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/auth', router);
+app.use('/api/auth', authRouter);
+
+app.use('/api/user', userRouter);
+
+app.use('/api/expenses', expenseRouter)
 
 connectDB().then(() => {
   app.listen(PORT, () => {
